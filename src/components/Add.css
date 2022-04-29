@@ -1,0 +1,29 @@
+.flex-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #caffbf;
+}
+.flex-item-0{
+    flex: 1 1 auto;
+}
+
+.flex-item-1{
+    flex: 1 1 auto;
+}
+.flex-item-2{
+    flex: 1 1 auto;
+}
+.flex-item-3{
+    flex: 1 1 auto;
+}
+.flex-item-4{
+    flex: 1 1 auto;
+}
+.flex-item-5{
+    flex: 1 1 auto;
+}
+.flex-item-6{
+    flex: 1 1 auto;
+}
