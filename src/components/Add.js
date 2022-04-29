@@ -1,22 +1,61 @@
-import * as React from 'react';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import * as React from "react";
+import Checkbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
-import './Add.css'
+import "./Add.css";
 
 export default function Add() {
+  const [users, setUsers] = React.useState([]);
+  React.useEffect(() => {
+    fetch("https://graphqlzero.almansi.me/api", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: `query{
+        users{
+           data{
+             id,
+             name,
+             username,
+             email,
+             address{
+               street
+             },
+             phone,
+             website
+           }
+       }
+     }`,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUsers(data.data.users.data);
+      });
+  }, []);
   return (
-    <div className='flex-container'>
-        <div className='flex-item-0'> <FormGroup>
-      <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-    </FormGroup></div>
-        <div className='flex-item-1'> Name </div>
-        <div className='flex-item-2'> Username </div>
-        <div className='flex-item-3'> Email </div>
-        <div className='flex-item-4'> Phone </div>
-        <div className='flex-item-5'> Website </div>
-        <div className='flex-item-6'> Address </div>
-    </div>
-  )
+    <>
+      <section>
+        <header>
+          <div class="col">Name</div>
+          <div class="col">Username</div>
+          <div class="col">Email</div>
+          <div class="col">Phone</div>
+          <div class="col">Website</div>
+          <div class="col">Address</div>
+        </header>
+        {users?.map((user) => (
+          <div className="row">
+            <div class="col">{user.name}</div>
+            <div class="col">{user.username}</div>
+            <div class="col">{user.email}</div>
+            <div class="col">{user.phone}</div>
+            <div class="col">{user.website}</div>
+            <div class="col">{user.address.street}</div>
+          </div>
+        ))}
+      </section>
+    </>
+  );
 }
